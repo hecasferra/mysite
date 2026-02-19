@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heca Sferra — Writer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&family=Josefin+Sans:ital,wght@0,300;0,400;0,700;1,300;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #111010;
+      --paper: #faf7f4;
+      --warm: #f0ebe4;
+      --accent: #c8470a;
+      --accent2: #be2d6e;
+      --muted: #7e7570;
+      --border: #e0d9d1;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-mono: 'DM Mono', monospace;
+      --font-sans: 'DM Sans', sans-serif;
+      --font-display: 'Josefin Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.7;
+    }
+
+    .site-wrapper {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 0;
+      position: sticky;
+      top: 0;
+      background: #111010;
+      z-index: 100;
+    }
+
+    nav .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+
+    .site-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      font-style: normal;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-center a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-center a:hover { color: #fff; }
+
+    .nav-socials {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .nav-socials a {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s;
+      border: 1px solid #333;
+      padding: 0.25rem 0.6rem;
+    }
+
+    .nav-socials a:hover { color: #fff; border-color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 4.5rem 0 4rem;
+      display: block;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -60px;
+      width: 500px; height: 400px;
+      background: radial-gradient(ellipse, rgba(190,45,110,0.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: 20%;
+      width: 360px; height: 250px;
+      background: radial-gradient(ellipse, rgba(200,71,10,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-photo {
+      width: 155px;
+      height: 155px;
+      border-radius: 50%;
+      background: var(--warm);
+      border: 3px solid var(--accent2);
+      box-shadow: 0 0 0 7px rgba(190,45,110,0.1), 0 8px 32px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.3rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .photo-icon { font-size: 2rem; opacity: 0.3; }
+
+    .hero-text { position: relative; z-index: 1; }
+
+    .name-display {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(3.8rem, 7.5vw, 7rem);
+      font-weight: 700;
+      font-style: normal;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 0.92;
+      margin-bottom: 1rem;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--muted);
+      border-left: 3px solid var(--accent2);
+      padding-left: 0.9rem;
+      margin-bottom: 1.6rem;
+      line-height: 1.65;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.35rem;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .btn:hover { background: var(--ink); color: #fff; }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #e04d0f; border-color: #e04d0f; }
+
+    /* ── BLOG + SIDEBAR ── */
+    .content-area {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 3.5rem;
+      padding: 4rem 0;
+      align-items: start;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── POSTS ── */
+    .post {
+      padding-bottom: 2.75rem;
+      margin-bottom: 2.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post.animate {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeUp 0.55s forwards;
+    }
+
+    .post:last-child { border-bottom: none; margin-bottom: 0; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    .post-date {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .post-title {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.9rem;
+      color: var(--ink);
+    }
+
+    .post-image {
+      width: 100%;
+      aspect-ratio: 16/7;
+      background: var(--warm);
+      border: 1px solid var(--border);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+    }
+
+    .post p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.88;
+      margin-bottom: 0.85rem;
+      text-align: justify;
+    }
+
+    .post p:last-child { margin-bottom: 0; }
+
+    /* poem / pre-formatted text */
+    .post .poem {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 2;
+      white-space: pre-line;
+      margin-bottom: 0.85rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--border);
+    }
+
+    /* ── LOAD MORE ── */
+    .load-more-wrap {
+      text-align: center;
+      padding: 2rem 0 1rem;
+    }
+
+    #load-more-btn {
+      cursor: pointer;
+    }
+
+    .posts-count {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 0.8rem;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { position: sticky; top: 68px; }
+
+    .sidebar-block {
+      background: var(--warm);
+      border: 1px solid var(--border);
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-block h3 {
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+      color: var(--ink);
+    }
+
+    .search-form {
+      display: flex;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .search-form input {
+      flex: 1;
+      background: #fff;
+      border: none;
+      padding: 0.55rem 0.8rem;
+      font-family: var(--font-sans);
+      font-size: 0.83rem;
+      color: var(--ink);
+      outline: none;
+      min-width: 0;
+    }
+
+    .search-form input::placeholder { color: var(--muted); }
+
+    .search-form button {
+      background: var(--ink);
+      border: none;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 0 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .search-form button:hover { background: var(--accent2); }
+
+    .sidebar-quote {
+      border-left: 3px solid var(--accent2);
+      padding: 1.1rem 1.1rem 1.1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      background: var(--warm);
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-quote blockquote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .sidebar-quote cite {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-style: normal;
+    }
+
+    .book-sidebar-block {
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .book-sidebar-header {
+      background: var(--ink);
+      padding: 0.7rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .book-sidebar-header span {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .book-sidebar-header .new-badge {
+      background: var(--accent2);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+    }
+
+    .book-sidebar-body { padding: 1.1rem; background: var(--warm); }
+
+    .book-sidebar-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 0.2rem;
+    }
+
+    .book-sidebar-year {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.7rem;
+    }
+
+    .book-sidebar-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    /* ── BOOKS ── */
+    .books-section {
+      padding: 4rem 0;
+    }
+
+    .book-full {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .book-full-cover {
+      aspect-ratio: 2/3;
+      background: var(--warm);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+
+    .book-full-info h2 {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.05;
+      margin-bottom: 0.3rem;
+    }
+
+    .book-full-info .book-year {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .book-full-info p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 0.9rem;
+      max-width: 52ch;
+    }
+
+    /* ── ABOUT ── */
+    .about-section {
+      padding: 4rem 0;
+    }
+
+    .about-photo-large {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--warm);
+      border: 3px solid var(--accent2);
+      box-shadow: 0 0 0 6px rgba(190,45,110,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.3rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-intro {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .about-intro h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-style: normal;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.0;
+    }
+
+    .about-text p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.85;
+    }
+
+    .about-text p:first-of-type {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      border-top: 1px solid var(--border);
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--ink);
+      line-height: 1.0;
+    }
+
+    .contact-section p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: var(--muted);
+      letter-spacing: 0.07em;
+      gap: 1rem;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--ink); }
+
+    /* ── SEARCH HIGHLIGHT ── */
+    .post.hidden { display: none; }
+    mark { background: rgba(200,71,10,0.15); color: var(--ink); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-socials { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+        padding: 3rem 0;
+      }
+      .hero-photo { margin: 0 auto; }
+      .hero-tagline { text-align: left; }
+      .content-area { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .about-section { grid-template-columns: 1fr; }
+      .book-full { grid-template-columns: 130px 1fr; gap: 1.75rem; }
+      .nav-center { gap: 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .book-full { grid-template-columns: 1fr; }
+      .name-display { font-size: 3.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="site-name">Heca Sferra</a>
+      <ul class="nav-center">
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="site-wrapper">
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1><span class="name-display">Heca<br/>Sferra</span></h1>
+        <p class="hero-tagline">Writing the pain, the healing and everything in between.</p>
+      </div>
+    </section>
+
+    <!-- BLOG + SIDEBAR -->
+    <div class="content-area" id="blog">
+
+      <main>
+        <!-- ═══════════════════════════════════════════
+             ALL 59 POSTS — newest first
+        ════════════════════════════════════════════ -->
+
+        <article class="post animate">
+          <div class="post-date">09 February 2026</div>
+          <h2 class="post-title">monday</h2>
+          <p>Told my therapist about you. She said it's time to close the case.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">06 February 2026</div>
+          <h2 class="post-title">She Writes in the Morning</h2>
+          <p class="poem">He calls it a literary love.
+She never called what it was.
+
+He misses her on rainy days.
+She misses his touch.
+
+He is all emotion.
+She doesn't speak of hers.
+
+He can't live with doubt.
+She is made of questions.
+
+He loved her.
+She was afraid of staying.
+He ran out of ways to say I love you.
+She ran away herself.
+
+She writes in the morning.
+He keeps her on the page.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">02 February 2026</div>
+          <h2 class="post-title">5:40am</h2>
+          <p>I couldn't sleep, imagining the weight of our embrace after so long without you.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">25 January 2026</div>
+          <h2 class="post-title">SOS</h2>
+          <p>It is a strange pleasure to feel that someone can reach for me without ever being reachable. All doors are shut, yet the page remains open, a hollow echo, a shadow of absence. Sad, isn't it? Let courage rise, let honesty speak without disguise. Would you? Would you dare admit the longing that cannot be described, the ache that hides behind walls of silence? If words are all we have, let them be a lifeline. Stop the quiet that cuts deep. A voice can save what fear is suffocating. Not answers, not promises, just sound breaking the dark. If this is a call for help, let it be answered with urgency. The sound of your voice can save my life.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">04 January 2026</div>
+          <h2 class="post-title">2026</h2>
+          <p>A new year, a diagnosis, and whole chapters to be written.</p>
+          <p>I think I am ok.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">31 December 2025</div>
+          <h2 class="post-title">When At Home</h2>
+          <p>It was still early when she woke me with a message saying she was coming to spend the day with me. Two hours. I was out of bed instantly. Shower. Strong coffee, not just to wake me but to scent the flat. I needed the place ready. I needed to get myself ready. I breathed through the waiting, paced it, let the minutes stretch. For someone anxious, that kind of patience feels like discipline. Then she arrived. Right on time. I opened the door smiling, already certain of what I would see. Still, it took my breath away. She was here! The hug was long, deliberate. She stayed a second more than necessary. The kiss that followed was slow, wet, unhurried. "Aren't you going to invite me in?" she asked. "You're already in." She looked down. "Shoes off?" "Clothes too." She laughed because she knew exactly how much of it I meant.</p>
+          <p>Another kiss. She was dressed as herself. Seeing her inside my house gave me the dangerous feeling that she was mine. And mine only. As if this had already happened somewhere else and we were just catching up. "Come," I said. "I'll show you the house." Kitchen. Living room. Hands intertwined. Downstairs, she noticed everything but touched nothing. That was intentional. "This is where everything happens?" she asked, that slight smile holding at the corner of her mouth as she got into the bedroom. "Not a lot going on at the moment." She caught the reference immediately and rolled her eyes. I stepped closer and fit my body into hers. My hands at her waist, hers around my neck. We kiss slowly, as a scene stretched into slow motion. My breath stalled, and she felt it. She leaned in just enough. "You can breathe," she said softly. "There's no rush."</p>
+          <p>Winter outside. Short days. She told me she had all the time in the world for me. "Coffee?" I asked, already turning. "Yes, please." Upstairs. Still holding hands. While the water heated and I chose the coffee I'd been saving, she stood at the window watching the street as if she owned it. "This street suits you," she said. "Loud." "Not on Sundays," I said, almost defensively. The coffee brewed. Another kiss. Slower this time. I told her her hair was soft. She smiled at the way I had to rise onto my toes to reach her mouth. She stayed exactly where she was.</p>
+          <p>Living room. Coffee. Something was playing on the TV that neither of us followed. I watched her instead. How she arranged herself into the cushions. How she claimed the space without asking. I had imagined this moment too many times to waste it now. "You're beautiful," I said. "Truly." She kissed me like a response, not a thank you. After the last sip, her chest became my pillow. My body settled against hers, and something in me let go. Lying down erased differences. I think I said that aloud. I don't remember the language. The warmth from the coffee moved into us. Bodies searching. Finding. Aligning. My hands traced her slowly, not mapping but claiming sensation. Her skin answered. Her eyes softened. Her breathing changed. The rhythm between us wasn't negotiated. It was recognised. I leaned in close. "The bed," I said. She closed her eyes. "Yes."</p>
+          <p>She waited for me to move first. Each stair took something away. Fabric slipping. Buttons abandoned. Not urgency, but inevitability. When we reached the bedroom, I closed the door. And on the inside, everything that mattered stayed exactly where we wanted it.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">14 December 2025</div>
+          <h2 class="post-title">14th Dec</h2>
+          <p>While I wait, I watch the wind scatter the last leaves on an already naked tree. People pass, wrapped in their own thoughts, and I wonder where they might be heading. Does it matter? Well, maybe it does, for a busy mind like mine. I smile gently at some child and make my way back home.</p>
+          <p>And for the first time in a long while, I let myself be whole again.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">10 December 2025</div>
+          <h2 class="post-title">and writing...</h2>
+          <p>I noticed something simple and yet profound. I am okay. Truly okay.</p>
+          <p>Life has found a quiet point inside me that I did not even know I was searching for. And it is strange how this calm did not come from distance, it came from understanding. It is as if I can finally feel everything with more clarity without losing myself. So I write. Therapy has been guiding me back to who I am, my fears, my patterns, the ways I tried to protect myself, and the ways I hurt myself without meaning to. I'm learning to heal, piece by piece, and to accept that growth does not erase love; it makes it more honest. Every session teaches me to feel without running away, to listen to my heart without fear and to hold it gently.</p>
+          <p>So I write. And writing I think of you with a soft affection. Nothing heavy. Nothing demanding. Just a quiet tenderness that sits beside me even when you stay silent. I like knowing you exist in the world. That alone is enough.</p>
+          <p>If one day you choose to come back here, the door is open without pressure. There is no clock; no expectation; no weight. There is space. You can arrive slowly, watch from afar, or remain silent for as long as you need. My movement now is simple; I feel, I allow, I breathe. You can come at your own pace, in your own time, lightly. So I write. I write because even in stillness, you are present. And if someday our paths meet again, it will be because you chose it. And that will be enough.</p>
+          <p>So I write. I write because I want you to know that I'm learning to hold my heart with patience. And in that patience, there is a place that remains yours. Always. Your thunder.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">03 December 2025</div>
+          <h2 class="post-title">So I Write</h2>
+          <p>I wish I could say this while looking into your eyes, yet I'm not sure I'd make it past the first sentence without wanting to kiss you. So I write.</p>
+          <p>I write to tell you that I forgive you. I understand now the corner you were pushed into; none of it was simple. I forgive myself too for stumbling through it all. And that last word you threw at me barely scratched the surface; I was already bleeding long before it landed.</p>
+          <p>Because we still have a book to finish, and my version is always better when you're in it. I write because I remember the first line I ever wrote about you and how I imagined you reading beside me while I played my games. You're still there. Still next to me, somehow, every time the TV hums to life. It's madness.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">12 October 2025</div>
+          <h2 class="post-title">Layers</h2>
+          <p>I still remember how it felt to hold your hand freely. No guilt, no pretending, just warmth against warmth, like our palms had decided long before we did. Once, we kissed on the train. The world outside blurred into a moving watercolour. London sliding past in streaks of grey and gold, and for a moment I thought: this is how belonging feels. Then the doors opened, and belongings left with you.</p>
+          <p>Autumn came early this year, and I see us everywhere. In the condensation on café windows, in scarves pulled high, in the way people fold themselves into the cold. Layers upon layers, like we were: truths, disguises, tenderness, fear. The air still smells like us, sharp, alive, impossible to name. Remember the bridge? I walk that bridge every day. It remembers what we tried to forget. The wind there is the same, and, believe me, it still knows your name.</p>
+          <p>How would you feel if I told you I wrote a book about us? To understand what survived when we didn't. I've been reading the English poets again. Auden wrote that sometimes love's purpose is only to reveal what we're capable of feeling. Maybe that's what I'm doing: turning ache into language, distance into story. Because some people move on, and others write. And I'm still walking that bridge, carrying the weight of every layer we never learned to take off.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">28 September 2025</div>
+          <h2 class="post-title">I wake up, and the first thought is you. Always you.</h2>
+          <p>This has become the rhythm of my days. Updates that don't need answers. Declarations that don't ask for anything in return. A flood of words fills the silence where you used to be. Maybe I'm not even writing for you anymore, maybe I'm writing to stop myself from disappearing. I love you. Every message is a piece of me I send, hoping it'll make the weight of carrying you inside me a little less brutal.</p>
+          <p>And none of it reaches you.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">20 August 2025</div>
+          <h2 class="post-title">Nothing left</h2>
+          <p>There is absolutely nothing left that I can do. My chest burned like embers as sorrow seeped in, slow and poisonous. It felt like tearing hope into thin strips. And if hope is the last to die, in me it already lies at rest, unflowered, kept vigil beside everything that once was love. The cruellest part was not your sudden absence, but your goodbye in droplets, because I am not good with farewells. Like a drug reduced to homoeopathic doses, your presence dissolved little by little until one day I woke up, looked at myself in the mirror, and did not see you. I found the mirror strange, I found strange the train where I did not kiss you, I found it odd that my own hands were empty, without yours to hold.</p>
+          <p>And like every addiction that comes undone, withdrawal tore through me in sleepless nights, in fevered memories, in silences that burned on my tongue. There were tremors, there was thirst, there was the illusion that a single spark of you would be enough to set me on fire again. But time kept cleansing my pores, purifying my blood, expelling you from every corner of me. Until one day I realised my mouth no longer spoke your name, and my thoughts no longer called for you. In that moment, I understood that there was no addiction left, there was no you left. Only the void, raw and clean, of a love that died inside me. Therefore, there is absolutely nothing left that I can do.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">30 July 2025</div>
+          <h2 class="post-title">Post 400. Where the Book Begins</h2>
+          <p>The room pulsed with an almost illicit energy that evening. The front door hid more than just a space; it held a secret. Outside, passing figures flickered in the glass like ghosts, blind to the transgression breathing behind these 987 square feet, a passion that should never have existed. Inside, time unravelled. Reality wove itself into something indistinct, tangled between longing and inevitability.</p>
+          <p>Robin always arrived first, a silent ritual. Perched in the blind spot at the top of the stairs, phone abandoned on her lap, gaze anchored to the vacant wall, she measured time not in minutes but in the rhythm of her own pulse. The waiting wasn't agony, it was proof. Elliot would come; he always did. And that was the problem.</p>
+          <p>Beyond these walls, London moved unbothered, indifferent, but here everything funnelled down to two bodies navigating the weight of a decision already made. The sharp click of a key turning in the back door snapped the moment in half. Always that entrance. No one could know. For the next few months, every afternoon would be a quiet conspiracy, bolted doors, shallow breaths, words choked back before they could be spoken.</p>
+          <p>Elliot stepped inside, and Robin instantly noticed how his breath sat too high in his chest. Uncertain. He felt it, too, but that was the difference between them. Robin questioned, Elliot pretended not to. The silence stretched, thick and charged with a name neither dared to give it. The lights hummed overhead. They looked like distorted reflections of themselves, as if this version of them only existed within these four walls. Here, there were no rules. "You came." Robin dragged a hand through his hair, exhaling a quiet, humourless laugh and stood up. "I always do." As if giving her a chance to retreat. She didn't. Now, he was here, close enough that the heat of his skin blurred the space between them. Her heart betrayed her, a fierce rhythm pounding against her ribs, insistent and undeniable. For a moment, she thought about all the certainties she had once held. But when Elliot reached out, she knew nothing would remain unchanged. And for the first time in a long time, she was sure she didn't want to stop it.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">10 July 2025</div>
+          <h2 class="post-title">3am</h2>
+          <p>I'm awake. Maybe it's the heat. Maybe it's my thoughts. Can't sleep. The pills don't work anymore. How much can you miss someone? I'm staring at the ceiling.</p>
+          <p>3.02 am. No answer.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">08 July 2025</div>
+          <h2 class="post-title">sixhundredthirtyhoursofsun</h2>
+          <p>We were a theory, not a plan. You bloom where the sun lives. I burn and sulk. You chase light like it owes you joy; I chase shade like it owes me peace. Six hundred thirty hours of sun, and I'm radiant, ghost-pale and grinning, the happiest contradiction in London's golden Spring. You? Probably glaring at the sky, wondering how it got so loud. I think it's because of me. I wish I could say this to you. But you'd only close your eyes, turn your face to the light, and forget I was ever in the shadow.</p>
+          <p>And then there is water. And I don't know how to swim. She loves the water. I wish I could watch her body move beneath the surface. Me? I'm always on the edge: afraid the water will pull me under before I learn to float. You say water heals; I think it's a language I never learned. While you disappear in its quiet depths, I'm left standing, dripping, wondering if love is the same, something you can sink into, or something you only watch from the shore. I wish I could say this to you. But you'd laugh, splash me anyway, and pull me closer, whether I'm ready or not.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">05 July 2025</div>
+          <h2 class="post-title">Happy 5th of July</h2>
+          <p>If I could choose my words more carefully today, it wouldn't be to dazzle you, but to find a language vast enough to carry your beauty. The coffee would be ground fresh, its scent blooming through the rooms like a soft promise. Beyond the window, the sea stretches endlessly, dissolving into sky, blue meeting blue. The sunlight brushes your skin, unveiling you slowly. You're caught in the wind, eyes closed, smiling like the moment belongs only to you. I watch in silence. I registered it on 35mm. The rest of the day? Laughter echoes between songs. Tangled sheets. Words whispered in the hush between breaths. Today is yours. Entirely.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">02 July 2025</div>
+          <h2 class="post-title">The Day Before</h2>
+          <p>It's funny, really. I used to think birthdays were just about the day itself: cake, noise, fun t-shirts, the moment everyone sings off-key, and you don't know where to look or what to do with your hands. But then came you. You, with your quiet wisdom and sideways way of seeing the world. You were the one who said to me, "Why not celebrate the last day of being thirty-eight?" Like it was obvious. And it stayed with me.</p>
+          <p>Especially now, as your day draws closer, I keep imagining how you're moving through this week, how you're closing your cycle, quietly marking the last days of your old age. I imagine you walking slower, noticing the sky, counting moments in sips of coffee and pages turned. You said your birthday didn't matter, called yourself boring, as if your life didn't deserve candles and confetti, and I hope, more than anything, that you remember what you taught me: That ageing isn't a loss. It's a gathering.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">17 June 2025</div>
+          <h2 class="post-title">Vicious High</h2>
+          <p>I sip reality in bitter shots, chased by dreams that burn like liquor. Each swallow was a revolt against the ache that moved in before I even had a name for it. My chest stays tight, and I am in a room with no windows. Anxiety doesn't knock; it lives here, unpacking bags into my breath, tapping its fingers on my ribs when I try to sleep. So I reach. For something, or someone, anyone who feels like silence in the storm of my thoughts. Drugs, drinks, touches, lies, all the same brand of escape.</p>
+          <p>I don't want joy. I just want less. Love? It's a needle, too. Different syringe, same blood. I crave someone the way the sick crave a cure, forgetting some medicines kill you if you take too much. But I take it anyway — I always take it anyway. I don't fall in love. I vanish into it. I let them drown me, softly, with hands I mistake for salvation. They hold me until I confuse their leaving with something I deserved. And when they're gone, because they always go, I don't just break.</p>
+          <p>I return. To the cold that raised me, to the emptiness that waited behind every kiss. Their absence sits beside the pain that was already there. It doesn't replace it. It joins it. Like grief calling its old friend back home. This is the cycle. The hit. The high. The hollow. And still, I go back to the lips that lie, the arms that vanish, the pain that feels like proof I existed for a moment. I tell myself I'll stop. That next time, I'll run. But I don't. I won't. Because deep down, I'm not chasing love. I'm chasing numb. And the saddest part is: it works. Just long enough to need it again.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">24 May 2025</div>
+          <h2 class="post-title">Quando a Gente Ouve — English Version IV</h2>
+          <p>"When I utter those words, 'I don't know,' it dances on the air, far more complex than it seems. There was a time I walked in certainty, where life's path felt settled and assured. I believed in the existence of others along this journey, yet never took the time to bridge our worlds, to weave our stories together. When I whisper my uncertainty, it stems from a place I never dreamed existed—the depths of my heart, where feelings intertwine like vines, ensnaring me between two souls. I never imagined how effortlessly I could be swept away by her, caught in the thorns of love. If only the choice were so clear-cut. You think I should leap fearlessly or relinquish you to the winds of fate, but I've wrestled with this battle countless times—in the silent corridors of my mind, in the tender chambers of my heart. At times, it feels right, an embrace of possibilities, yet in the blink of an eye, the clarity fades into shadows again. And oh, how piercing it is to listen to her voice, alive with anticipation, while I linger on the brink of her words, wondering if she will unveil the joys or the hurt; but the spectre of uncertainty looms, and I fear I might miss that truth, slipping back into silence where hurt obscures our connection, leaving her hesitant to share the beauty of what we could be."</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">23 May 2025</div>
+          <h2 class="post-title">Writing can be a draining act</h2>
+          <p>To write is often to reopen wounds, to face the ache of memory and feel again what once whispered in the dark. Perhaps that's why some poets turned to opium: to numb the pain just enough to hear the truth more clearly. They didn't run from feeling; they distilled it, drugged just enough to choose the right words, turning torment into beauty, sorrow into verse.</p>
+          <p>Art, after all, demands a toll. And memory never comes without its ghosts. Now, as I write my own book, I've chosen to face the past with my eyes closed — not to escape, but to relive. Not with opium, but with you. You are the presence I breathe in. And in every memory I revisit, it's your shadow I find shaping the story. You are the pulse behind every page.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">23 May 2025</div>
+          <h2 class="post-title">There was a time she moved like a pendulum between us...</h2>
+          <p>...between the boy who had always been there, warm and familiar, and me, a sudden spark in a dim corridor. Her heart, a compass constantly spinning, never quite pointed home. And that was enough to begin something we never quite finished. It wasn't love. Not at first. It was a spark, the kind that catches if the wind's just right. We told ourselves it was innocent. It wasn't. The truth was, we both wanted to be seen. To be chosen. To be the reason someone turned around.</p>
+          <p>She drifted between us like someone chasing her own reflection in a broken mirror—wanting him, wanting me, wanting no one at all. And when the wanting dried up, she stood in the stillness, trying to remember who she was before she bent herself to fit into someone else's hands.</p>
+          <p>Lisbon was where it all came undone. Not loudly. Quietly. The kind of unravelling that feels like a confession. The truth, the ache, the thing neither of us could name. Her voice was a murmur against the chill air as she sat near the river, and her eyes were tired of choosing. The city was beautiful and breaking at once, just like her. She spoke of wanting to love and how often she confused the need to be held with the need to be whole. She had tried to pour herself into others, hoping they might complete her, but their arms had always been too small to hold the storms within her.</p>
+          <p>This was the car before the crash. That summer had the taste of borrowed time. Like the steel glint of a car just before the bend. She loved the way I made her feel alive. But he made her feel safe. And when the world starts closing in, most people choose the harbour over the open sea. I think she saw it then. I think of her sometimes, still. Of her inner child, lonely and folded into corners, asking to be held. Of how I once held more than her hand — I held her hope. Her ache. Her soul. And maybe that's what love is. Not the staying. Not the choosing. Just the knowing. She didn't look back. But I did.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">14 May 2025</div>
+          <h2 class="post-title">Elegy Among the Fells</h2>
+          <p class="poem">I came to the hills where poets came to die,
+not of wound nor illness, but of truth,
+to lay their sorrow down in the hush between stone and sky.
+
+Here, the earth remembers what the heart is made to forget.
+
+So I have come too, with your name like ash in my mouth.
+
+The wind in your voice, the warmth of a false dawn —
+I mistook it all for love.
+
+You wore your kindness well,
+but it fit too perfectly, like a borrowed coat.
+I never saw the seams.
+
+It opened its hand, and there were your lies,
+lined up like smooth stones pulled from a black river.
+And I — I was the last to know I was drowning.
+
+Not from the world, but from the cathedral of my mind.
+
+Your place is sealed, a crypt beneath the heather.
+
+The poets here died for beauty, or for truth.
+You? You simply faded, like fog from a mirror.
+No carved name. Only silence, and the clean forgetting.
+
+You do not sleep in my memory — you are exiled from it.
+Erased, not mourned.
+Not for you, but for the self who once believed
+that love and light could not lie.
+
+And walk on, lighter than grief, heavier than peace.
+I once believed in you. When truth arrived, it did not shout.
+Now you are gone. There will be no weeping.
+And still, I leave this elegy.
+Among these hills, I bury her too.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">08 May 2025</div>
+          <h2 class="post-title">You Don't Get to Call It Beautiful Now</h2>
+          <p class="poem">There is a storm in my soul.
+
+You saw it once — marvelled at it, maybe even feared it.
+But you never understood it.
+You tried to tame it, contain it in promises too fragile for my thunder.
+
+Now that storm is mine again.
+No longer stirring for you.
+
+It dances to my own rhythm now, one you can't follow.
+It crackles with the fire of everything I reclaimed.
+
+I am the electric silence before the lightning.
+The pulse before the quake.
+
+Majestic, yes — but no longer yours to witness.
+This storm doesn't break me.
+It makes me.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">07 May 2025</div>
+          <h2 class="post-title">So It Goes</h2>
+          <p>I paused. The kind of pause where everything inside you screams, but the outside stays still. Silent. Numb. I sat in that silence, heavy and hollow. I'm empty. I feel sick — like something inside me rotted and leaked into my skin. I feel dirty in a way that no amount of scrubbing will fix. And my friends — they look at me like I'm broken. They're right. But none of this started with me.</p>
+          <p>This started with you. Your emptiness. Your sickness. Your dirt. You handed it to me, gift-wrapped in charm and fake promises. All this fucking time, it was your damage, damaging me. My vulnerability versus your game. You lied. You used me to save something you had. You told me you didn't deserve my heart, and God, you were telling the truth for once. I should've listened. But love makes you deaf. And I kept loving you. I over-gave myself to you, and maybe that's my curse. But yours? Yours is never being able to forgive yourself for what you did. You're everything I never want to be. And I hate that it took this long to say that out loud.</p>
+          <p>My weakness and pain were thrown into conversations like it meant nothing. Well, I hope you find comfort in the mess you made. You'll never forget me. I cursed your name. And my ghost will haunt you every time he lays a hand on you. Every memory of me will claw its way back until the day they bury you. I hope you hear my voice in every silence. You had your choice. Now I have mine. And I choose never again to let a filthy soul touch mine.</p>
+          <p>You tried to crawl back into my dreams like a coward, hoping I'd let you rewrite the story. But I've closed that book. So I release you now — not with fury, but with finality. No more rage. No more echoes. Just silence. Some chapters end not with fire, but with peace. May you find whatever you're still searching for, far from where I begin again.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">25 April 2025</div>
+          <h2 class="post-title">Where Love Stays After the Fall</h2>
+          <p>Love has a strange way of finding us, sometimes in joy, but more often in the unravelling. Life, with all its careful plans and promises, can shift in a breath. One moment, you're steady. Next, you're staring at the pieces of something you thought would last. And in that quiet wreckage, heart cracked open, hands trembling, love reveals what it really is.</p>
+          <p>I've learned that heartbreak doesn't just hurt. It hollows. It echoes. It lingers in the spaces they once filled, in the silence after laughter, in the absence that follows presence. It takes your breath before you even realise it's gone. But even in the ache, there is beauty, because to grieve like that means you dared to love deeply. You let yourself be seen, held, known. That kind of love never truly disappears. It leaves something behind.</p>
+          <p>Pain, no matter how sharp, is temporary, though it doesn't always feel that way. Sometimes it wraps itself around your ribs and makes a home there. But even then, it is love, not just romantic love, but the fierce, quiet love of friends who don't let go, the familiar love of family, the sacred love that lives in spirit, and the broken but still-beating love you give yourself, that keeps you breathing. Every hardship is a message written in a language only love can translate. And when everything else is stripped away, love stays. It stays in the memory. It stays in the way you keep going. It stays in you.</p>
+          <p>What I've come to understand is this: rising isn't about pretending you're okay. It's not about being unshaken. It's about choosing love, again, even with hands that shake. It's about showing up for yourself when you feel unworthy, believing in light even when all you've known is dark. It's about loving yourself not because you're whole, but because you're not, and you still keep trying. So if your heart is shattered, don't rush to sweep up the pieces. Sit with them. Cry over them. Bless them. Because that brokenness means something mattered. Let it tear you open, not apart. Let it hurt — really hurt. And then, when you're ready, let love walk you back into the world. Not the same. Not untouched. But real. And more alive than ever.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">21 April 2025</div>
+          <h2 class="post-title">50km</h2>
+          <p>I rode for miles, trying to quiet the noise in my head. Fifty kilometres of empty roads up north and heavy breath. New places. And somehow, without meaning to, I ended up in front of your house, still carrying everything I tried to leave behind. And I just stood there, not knowing if I wanted to knock or keep riding forever.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">15 April 2025</div>
+          <h2 class="post-title">From The Vault</h2>
+          <p>You know, I'm so deep, so intense, that any attention feels like love. I understand you, your pain, your thoughts, your moments. I'm deeply involved and I don't know how to escape. I don't know if I should stay or go, wait for you, or leave it up to fate. Fate sometimes plays with us and I wouldn't say I like it. I give too much of myself and I stumble, hurting myself, even though I know what's coming. I know you can't say much and this silence cuts me and opens wounds I don't want to nurture. But 'every time I run away, I get closer, and losing sight of you like this is too painful,' and I don't know what to do anymore. I crave your complete affirmation because I already feel a connection, and I hesitate to get close to others.</p>
+          <p>It's hard. I want peace. But I also want love, desires and wants that are physically fulfilled. You balance me and that does me good. It's hard to be the hidden side when my heart wants to scream. It's even harder to know that I can't keep anything I write, only in my heart, if it fits. I'm overflowing. And I've reached the point of fear.</p>
+          <p>Some coincidences scare me. It's hard not to think. My silence speaks louder when it meets your eyes. Maybe that's the only way we'll understand each other. I don't want to spend my life without you, but if it weighs too much, I'll leave. Without demanding anything. Without anything. I'll just go. If I'm meant to stay, I'll stay. If I'm meant to come back, I'll come back. But every action is yours. Every song is for you. Every thought, every note, every melody. You made me feel what I never dared to feel again.</p>
+          <p>I'm here, but I don't know how much longer I can hold on. It's like I know where this ends and it's not just in bed. I know you read it one, two, three times until you mark it in your heart because, for a long time, no one has told you what I'm telling you. No one spins in your rhythm and makes the hours double so you have your own time. This isn't a conquest, it's a confession. It's love overflowing. It's giving you the sky and carrying the moon photographed by me on a pendant hanging on your chest. Unique. Exclusive. Yours! Let these tears flow while this smile takes over you, and then you don't know whether to cry from pain or desire. I understand you. Again.</p>
+          <p>The worst part? Not being mine. If it were, the bed with white sheets and duvet would be smooth, waiting for this tired body of yours ready for a hug that has waited for you all day. Come! I'll take care of the bad, the fear, the detachment, the broken. I'm the one who understands this the most after Drummond or Fernando Pessoa. Trust. Let go. A yes. For us.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">12 April 2025</div>
+          <h2 class="post-title">The other day, while counting my steps on a street that didn't seem to lead anywhere but the office...</h2>
+          <p>The other day, while counting my steps on a street that didn't seem to lead anywhere but the office, I heard your voice call my name. Clear. Steady. Like you'd just stepped into the room of my life again, casually, as if no time had passed. For a second, I thought maybe I was slipping — low blood sugar, a lack of sleep, maybe something weird I ate. But no. None of those things. So I answered. Of course I did. What else does a heart do when it hears home? For a few minutes afterward, I stood there in a sort of waking dream, swept into the exact shape of how it used to feel when you were close.</p>
+          <p>It was so real, so full, I thought my heart would burst open just to make more space for the joy. I didn't try to understand it. The universe twists itself into knots sometimes, just to see if we'll notice. But now I know — if I ever hear your voice again, I'll follow it, no matter where it leads. With all of that spinning through my mind, I got home that day and remembered — somewhere in the middle of all the emotional chaos we lived in, there was one thing I never doubted: I just wanted to be with her. Just to exist near her, in silence. Once, she told me she wanted that too. I remember how she said it — like it was the simplest truth in the world. But the love turned into a problem, and she asked me to not contact her ever again.</p>
+          <p>Now I walk, without expectations. Now I walk pretending the silence means I'm fine.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">28 March 2025</div>
+          <h2 class="post-title">A New Beginning</h2>
+          <p class="poem">I woke with a quiet mind,
+the weight of yesterday softened by sleep.
+Something inside me shifted —
+a simple but undeniable desire:
+to be happy, truly happy.
+
+No more games, no tangled lies,
+no voices raised in anger.
+I want love that feels like home,
+a refuge, a place to rest my soul.
+
+I carry within me the gifts I was given —
+a heart that overflows, hands that create,
+a spirit that longs to give without fear.
+I will share this only with someone
+who understands the sacredness of love.
+
+Let her be wild, but wild for me.
+Let her run free, but always find her way back.
+Let our problems be stepping stones,
+not walls between us.
+
+May we meet each other in truth —
+at the pub, in a long embrace,
+through tears, through laughter,
+through silence that needs no words.
+
+And if we ever lose our way,
+may she know that home is not a place,
+but a choice we make, over and over again.
+
+I no longer want to start over,
+to build and break, to rewrite my story alone.
+I want someone who understands my way,
+who walks beside me,
+who stays.
+
+Because love is not found.
+It is built.
+And I am ready to build.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">10 March 2025</div>
+          <h2 class="post-title">Hey,</h2>
+          <p>I'm healing. It hurts less now. Sometimes, I even go more than five minutes without thinking of you. I hope your journey feels the same. It will get easier before we find the courage to explore the brave side of us. One step at a time. Keep walking toward me. I'm here. Stay safe.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">16 February 2025</div>
+          <h2 class="post-title">Sunday Lights</h2>
+          <p class="poem">Is Sunday again. Cold. Bright enough.
+
+February is slipping away. Haven't done a thing this weekend.
+
+The air feels heavier. Familiar shadows press in — we know the signs.
+
+It will pass.
+
+Pain is temporary. I quiet your name in my mind,
+turn off the "what ifs."
+
+It shall pass.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">15 February 2025</div>
+          <h2 class="post-title">When in bed</h2>
+          <p>My mind replays you on a loop, wandering through the echoes of your favourite things, laughing where you used to laugh. The coffee tastes bitter now. Your voice was sugar, and I don't use it anymore.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">02 February 2025</div>
+          <h2 class="post-title">Letters Addressed To The Fire</h2>
+          <p>Hey, It's been a while since I last met your eyes right before breaking down in tears on the footpath, on a cold and sunny January day. Funny enough, it's sunny again today, but no tears this time. It took me time to decide whether to put these words together or let them slip away. But since all my letters are written for the fire, why not?</p>
+          <p>There are so many things you'd be proud of. I can almost hear your voice, telling me you never doubted my ability — though you'd also remind me to ask for that pay rise. I miss you saying that. There's a chance, just over the horizon, that I might become the head of my department. Or maybe that's just my anxiety spinning dreams. Either way, I'm covering for everyone and slowly making my way there — missing your encouragement along the way.</p>
+          <p>Guess what? I ran yesterday. Gosh, I don't miss it — can you picture my eyes rolling here? My legs are useless today, and it was only 5km, just a warm-up for next Saturday. How did you do this daily? Missing our walks through Alexandra Palace, where you showed me your run path and we talked about pacing. Mine yesterday was 5'35 — decent, isn't it? And while we're on the health update: 31 days alcohol-free. I told you at the start you'd be proud of me. Five coffees and two teas a day — is that acceptable? I miss you telling me coffee's no good for my anxiety.</p>
+          <p>I finished that series you told me about. Love Ruth, too. Finished the book as well, and now I'm deep into the sad, heavy one — halfway through. Missing your surprise book deliveries, the ones without notes inside. I need a new game to play. Went back to the old ones, and somehow, Batman got harder, don't understand why. On another note, I made a new Instagram account — my faceless pseudonym writer might just become famous. Keeping it private for now. You wouldn't want to see it — I miss your writing.</p>
+          <p>Ah, I gave the plant away to someone who actually knows how to keep it alive. Learned some new chords, and I've been singing for the smaller plants at home. They look happier. No, it's not Tay Tay. I can hear you saying "Good for them". Hate the fact that I've never played for you. Have I mentioned how many times I've lost my lip balm? I miss you telling me I need a whole box of them. You always said the right things.</p>
+          <p>Anyway, I don't know why I keep writing. Maybe it's the only way to keep you real or alive or around. Or maybe it's just good writing things out of my chest. It works and is easier — we agreed on that once. Alright, I should go. It's Sunday, and tomorrow is a big day. Wish I could tell you more. Have a good week. Don't hesitate to reach out if you need more info. Love, Me</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">01 February 2025</div>
+          <h2 class="post-title">Morning, Feb</h2>
+          <p>Keeping you stored like a WhatsApp message we gave up on (re)reading. Left sitting at the bottom, unseen, with no notification of arrival.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">31 January 2025</div>
+          <h2 class="post-title">And so, I fell silent</h2>
+          <p>I wrapped myself in the cloak of invisibility and allowed myself eleven days of silence. Eleven days to grieve, to exist in the emptiness left behind. It feels as if someone reached into my chest, took my heart and lungs, and commanded me to keep living. But how does one breathe when the air is gone? How does one move when the weight of loss turns every limb to stone?</p>
+          <p>I sit in the stillness, hoping that in the quiet, I might find a way to piece myself back together. But grief is not gentle. It does not wait for permission. It paralyses, flooding every corner of my being with an ache so deep it swallows time itself. I wake, but I do not rise. I exist, but I do not live. The world moves on, indifferent to the storm unfolding inside me. And so, I remain here, in the silence, mourning what was, mourning what will never be.</p>
+          <p>In the darkness, a friendly reminder: "it shall pass" — there's your handwriting on it — one day breath will return, and will find my way back to myself. But no matter how loudly my heart calls for you, no matter how many times I say I love you before I sleep, there is no path, no bridge, no flight, no way to reach you again.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">27 January 2025</div>
+          <h2 class="post-title">Chaos</h2>
+          <p class="poem">If I had to choose between you and you,
+I'd still choose you.
+
+Because here, on this side of the world,
+no one carries your essence, your elegance, your words.
+No one gets lost in books the way you do.
+No one holds your voice.
+
+Here, it's just silence,
+an empty hum that fades into nothing.
+
+And you? You're the melody in my chaos,
+the spark that lights the pages of my days.
+
+You make the ordinary feel poetic
+like each moment is worth savouring.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">19 January 2025</div>
+          <h2 class="post-title">I'm sorry</h2>
+          <p>If there's one thing I regret in all of this, it's that Saturday morning when I asked you not to come. I've cursed every place we went to together, and look at me now — alone and completely lost in my thoughts. I should have fought for us. I should have begged you to stay. I should have encouraged you more, let go of my jealousy, my possessiveness, my anger. I should have changed myself to take care of you. But you loved me as I was, and now I'm so lost without you.</p>
+          <p>I should have made myself your safe place from the very beginning. I should have erased all the lies I told myself, the ones that made me believe I was right when I wasn't. Look at me now. Full of regret. Please, forgive me for not being strong enough. I should have treated it as just a passing thing, like you said that day, and left it at that. But I couldn't. I knew it was more. I felt my whole body tremble every time I heard your voice. I knew we were more than just attraction. I felt the fear crawling up my spine, but at the same time, it made me smile. And at that moment, I knew — it was you.</p>
+          <p>Now all I want is to put on my shortest clothes and ride my bike in this cold, grey, foggy weather until I find the place where your life and mine will meet again. I'm tired. And the pills only help for a little while. Please, forgive me for not making you mine.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">11 January 2025</div>
+          <h2 class="post-title">The Unspoken</h2>
+          <p>It lingered in the space between us, a tension neither of us could name but both felt. Her presence stayed with me long after she left, a quiet warmth I couldn't shake. The way her eyes held mine, the brush of her hand — too deliberate to ignore. I told myself it was fleeting, that it would pass. But when her absence ached more than her touch ever could, I knew the truth. I craved her. I welcomed the way she unravelled me. It wasn't a question of right or wrong anymore, only of inevitability. We were standing at the edge, and neither of us could resist the fall.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">08 January 2025</div>
+          <h2 class="post-title">Are you there?</h2>
+          <p>Now you're in pain, and I can't reach you — not by phone, not at work, not through messages, not face to face. It feels like you cleared away the dust but swept me off with the wind.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">07 January 2025</div>
+          <h2 class="post-title">Be safe</h2>
+          <p>I'm still so confused. I keep seeing all the flashes in my mind about everything we went through. I changed my favourite playlist to sad vibes. Everyone is asking if I'm okay. Is my sadness visible on my face? It's been painful for the past six days. Maybe I'm going through what you experienced before. I'm worried about you and the situation you're in now. Did you know they contacted me? I felt attacked.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">01 January 2025</div>
+          <h2 class="post-title">11:59 pm</h2>
+          <p>Eleven days missing your voice. Feels like an unfinished song, a melody left unheard. Is it true, they say, that no answer is an answer? Because your absence feels like a response I wasn't ready for.</p>
+          <p>00:00 am — The World is awake. Already, my thoughts have found you, and the year hasn't even had a chance to start. Welcome, 2025.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">31 December 2024</div>
+          <h2 class="post-title">Sailor Song by Gigi Perez</h2>
+          <p>"I do love this song," she said. "Me too," I say.</p>
+          <p>"I don't believe in God, but I believe you're my saviour."</p>
+          <p>That could be our song, I dream.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">28 December 2024</div>
+          <h2 class="post-title">+55 019</h2>
+          <p>As the days of leaving draw nearer, my heart races uncontrollably. My desire to see you is so strong that I favourited the pictures I took of you. Yes, they are from that day when I couldn't take my eyes off you. And, not knowing how to fill the emptiness left by your absence, I thought this might help ease the pain.</p>
+          <p>When the night fell and everything went silent, I found myself rereading our conversations. I could hear your voice. I fell asleep with the phone in my hand and dreamed of you. Still in silence, you came toward me, and I welcomed you with open arms.</p>
+          <p>I didn't want to wake up. I tried to repeat it the next night and the night after. But this time, it was like the street outside: only silence.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">27 December 2024</div>
+          <h2 class="post-title">+55</h2>
+          <p>Once, you said that we were connected forever. Well, I immortalized your words in my hometown. If I'm afraid? It's only of hearing you say you don't think about me anymore.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">26 December 2024</div>
+          <h2 class="post-title">It comes in waves,</h2>
+          <p>No, not my anxiety this time, but the way I've been thinking of you.</p>
+          <p>It was Christmas yesterday, and here, we celebrate twice. Meaning: Since the morning of the 24th, I've been wondering what you're doing. If you cooked, if you picked your best dress — the one he loves — if you're having whiskey or wine. Both? Fair enough.</p>
+          <p>Wondering if you're actually enjoying the quietness on your phone. And in your mind. Or if it's just — silence — numbness. Am I allowed to write this?</p>
+          <p>Then, in the afternoon, I ask myself if you're happily picking up his shirt and if you're both matching clothes for tonight. "Doesn't work like that," I can hear your voice. And, in a lapse of time, reality knocks me out. Voices in my head now say that you've found your way back home, and I can hear your trembling voice saying, "I was not made to be split in half. He means home."</p>
+          <p>"Well," I say. I never knew what it feels like to be together. We both cried. A proper ending.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">21 December 2024</div>
+          <h2 class="post-title">Notes to you</h2>
+          <p>Hey,</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">18 December 2024</div>
+          <h2 class="post-title">Hey,</h2>
+          <p>Spent time with a friend yesterday, the kind who knows me inside out and where no masks are needed. She's been listening to my noise for 20 years now. Brave soul, isn't she? Told her about us. She loved you. That's how positive I'm feeling about it, us and the future we can build together. She loved the fact that I'm in love again after so many years and ready to make it happen, ready to call you "babe" and make myself home to you. I didn't bring the past because it doesn't matter anymore, does it? Ok, I did mention the mistake of convincing myself you lied to me. She called me stupid and I agreed.</p>
+          <p>And, besides my anxiety, here is where I am after opening up and hearing my own voice speak about us: I'm clearing the dust and I believe our trust can find its footing. I see the start of something real, like your smile after my coffee-flavoured kiss, my first stroke as I learn to swim, our laughter filling the space between us. You resting on my chest, breathing peacefully. And through it all, I see us turning every doubt into certainty. Together we will find our way.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">17 December 2024</div>
+          <h2 class="post-title">She said goodbye</h2>
+          <p>"You called it a choice between crazy and comfort. And to an extent you might be right. On Friday at Lisbon I had you both chasing me and both of you were upset in a different way and I felt it was all too much and it was only me that I could blame. I so wanted to blame someone else."</p>
+          <p>"Dodo said just said to take a deep breath because I looked like I was under water and allowed myself to breathe. You don't have to bear it all and I shut the door and didn't talk to anyone shortly after. For a moment I thought, I should be alone, I'm better without anyone."</p>
+          <p>"You can not love or want two people, I lived my life thinking that. You know I don't believe in God, maybe he will show up one day. Maybe we just need to be too sure of something and the universe will prove you wrong. Yes, the universe. I was fine until you walked into my life. You tell me not to measure love with time but intensity and I truly believe that's how you measure it. Heart on your sleeve and all."</p>
+          <p>"He asked for time to think, to remember to change what was lost. Crazy or comfort you ask and if it would be that simple, this would be so easy. One foot in, the other out of the door. I would split myself in two. I did imagine a separate new life that would be anything but crazy and then I did remember the life I planned for a long time. Never in this lifetime I thought I would want anything else but the good old plan."</p>
+          <p>"When my heart couldn't answer, I wanted to make the decision based on logic. Not the brightest of plans, but a plan. I can deal with a plan better than emotions. A plan is a task after all. Compatibility, compromises, changes. All the C's. What can I handle, who's heart am I willing to break?"</p>
+          <p>"You can't make this decision based on logic, but I can't have it all. I'm terrified to make a huge mistake, I'm terrified to take a leap and I'm also terrified to let it go. In my misery I know how lucky I am to have this much love, but love hurts. Oh, and how I feel that now."</p>
+          <p>"You said so many beautiful things and just proved that you have a beautiful soul and a beautiful heart, that you were willing to share. You say so many times that you are showing your best side and for the most of it I know what you mean. I seen you possessive, jealous, angry. There are many things I know you refer to when you are talking about your bad side, I also know these could change in a stable situation."</p>
+          <p>"You were right that we could have something great, not sure about lasting. I told you ending something like this would not be easy and I think I didn't even understand how hard this would be on so many levels or if I could even do it. You have lit something in me that I never knew existed and I can only thank you for sharing your light with me. It is indeed a privilege to have had that even if it was for a short while."</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">07 December 2024</div>
+          <h2 class="post-title">"I Miss You"</h2>
+          <p>I miss you in the middle of my day. Weekday in. Weekend out. I miss you when listening to Taylor. I miss every piece of you covered with my complaints. I panic about thinking I can't stay away from you for more than five minutes. I miss you when playing video games. I do want to feel your presence by my side while reading and watching your charm when bringing the wine glass towards your mouth without taking an eye off the book. I'm watching the whole scene. Your lips now taste like wine. I laugh. You ask me, "What's funny?", and I say, "You", and before your words break me, I kiss you. I'm drunk. On you. A kiss, a taste, and nothing else matters.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">01 December 2024</div>
+          <h2 class="post-title">"We can write a book together one day with all this"</h2>
+          <p>Me, the tricky guy. Her, the secretly taken girl of my dreams.</p>
+          <p>I promised myself that I wouldn't play games again. Not at work, not outside of work, no games at all! But 24 hours later, there I was, analysing every breath you take. Is she gay? Was she hitting on me? Or is she just being nice? Or, STOP! No scenarios to be created. Move on and get over it! Until she comes back offering me a lift. What?!</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">27 November 2024</div>
+          <h2 class="post-title">Quando a Gente Ouve — English Version III</h2>
+          <p class="poem">"They say it will fade,
+Those heavy burdens you bear,
+The pain that lingers,
+The sorrow that hangs in the air.
+
+'It shall pass,' they whisper,
+As if time could mend,
+The grief in your chest,
+With a promise, my friend.
+
+They claim your joy isn't yours,
+Nor the love that you crave,
+Just fragments of moments,
+Like leaves in the wave.
+
+'It shall pass,' they repeat,
+But why must they hide
+The truth of our struggles,
+And the tears that we've cried?
+
+As shadows of heartache
+Dance slow in the night,
+Why can't they just tell us
+What's wrong and what's right?
+
+For though it may pass,
+In the twilight's soft hue,
+It's the truth we seek,
+And in that, we rise too.
+
+In the grief that we cradle, the love that we nurture,
+Are we, not fragments of moments, a beautiful rupture?"</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">23 November 2024</div>
+          <h2 class="post-title">Quando a Gente Ouve — English Version I</h2>
+          <p>"There is a storm in her soul. Constantly stirring within. I see it in her eyes always. The electric vibration sparks when she is near. I feel my skin pricks, my heart beat to the sound of her thunder. The rhythm is exhilarating, the feeling is terrifying. It's majestic."</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">21 November 2024</div>
+          <h2 class="post-title">Quando a Gente Ouve — English Version II</h2>
+          <p>"You are a thunder of beautiful things and I'm just glad to feel the rain on my skin as you pass. It's you, with all your sass and bluntness and good heart and feistiness. The whole package. And all the signs of your strength. One day you will think back and realise that they were compliments."</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">19 November 2024</div>
+          <h2 class="post-title">19th Nov — 9:41pm</h2>
+          <p>Life would be good again if I could just lie down in your arms and be surrounded by silence. It feels comforting. And somehow, I don't pay too much attention to the noise that silence brings to my mind. It will be just a noise, like Tay Tay for you. I got it now.</p>
+          <p>Life would be good again if I could watch you taking your precious shower with no second intentions. Just me, sitting there, following the water trace the curves of your body. It is just to make sure that I know every little detail of you by heart, without touching. And to find inspiration for my morning writings. Nice touch. If I'm allowed to play with words here.</p>
+          <p>Life would be good again if my Sunday mornings tasted like coffee and smelled like you. I can picture us reading on different parts of the sofa, yet still connected by touch. You're more touchy now than you used to be, and I love it. People sync, don't they?</p>
+          <p>That's why life would be good again if I could feel you in the middle of the night, just checking if I'm still breathing. That's care. And that's divine. My list is endless when it comes to you. A place where I can be myself. Safely. Still, life would be good again if this could be real.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">11 November 2024</div>
+          <h2 class="post-title">"As you might know..."</h2>
+          <p>...is almost the end of 2024. If I had to go back and tell you a few bits about this year I wouldn't know from where to start. Here are some highlights: a new job, Taylor Swift — twice — for the summer.</p>
+          <p>However, what doesn't kill you makes you stronger, and I know this is the wrong artist I'm quoting, but it's true. I won my battles against my own enemies and after the pain, I'm going home for Xmas. What a surprise! It will be hot — very! — and special after 8 years. Wrapping this year up with family and friends is priceless.</p>
+          <p>39. I never thought that I could make it until here. Is like a new whole thing now thinking about my (lonely) future. Scary. Based on that I want to be clean, healthier, and stronger mentally and physically. What I really want is to be sober! Want to heal and be the best version of me for me. And, in the end, managed to finally love — and be loved — the way that I deserved. Dear reader, wish me luck because I'm (feeling) ready for it!</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">12 September 2024</div>
+          <h2 class="post-title">Whispers of tomorrow</h2>
+          <p>So many things to say with no one to listen. The cold and dark days, and completely cosy, are knocking on the door, and I still haven't figured out if your perfume is sweet enough to face the winter and the citrus freshness of mine.</p>
+          <p>So many things to create with no one to share them with. I bought a new camera and some vintage film that perfectly complements the orange hue of your hair. To bring warmth to the feed and to our afternoons after 3 pm.</p>
+          <p>So many places to explore with no one to accompany me. I made a list of my favourite destinations around the world, noting each one's restaurants that serve your favourite dishes. There's something enchanting about planning summer during winter. It warms the soul in a certain way. I'm sure it would take your breath away in different ways, just so I could use my mouth-to-mouth skills and hear you say I saved your life. In a way.</p>
+          <p>So many decisions to make, and I still can't find where my street meets yours, where my calendar aligns with yours. Maybe it's the time difference, the cold, or just the distance that keeps us apart. But even in this uncertainty, I find comfort in the thought that one day, our paths will cross perfectly, our days will harmonize and the distance will dissolve. Until then, I'll hold onto these dreams like a secret promise, believing that each moment of waiting is a step closer to the day our hearts will finally find their perfect rhythm.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">07 September 2024</div>
+          <h2 class="post-title">Lost In You</h2>
+          <p>To be Continued….</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">20 August 2024</div>
+          <h2 class="post-title">Turning Life's Surprises into Strength</h2>
+          <p>Life has a peculiar way of teaching us lessons we never expected to learn. One day, everything seems to be in place: the stable job, the well-laid plans, the comfortable routine. And then, suddenly, the ground that once felt solid begins to crumble beneath our feet. It's in that exact moment, in the midst of darkness and uncertainty, that we are challenged to truly find ourselves.</p>
+          <p>I vividly remember the year when life's clock seemed to speed up in ways I had never experienced before. It was as if time folded in on itself, compressing two decades of growth into just twelve months. I, who had believed I had everything under control, found myself standing amid absolute chaos. Every certainty I held was questioned. Every meticulously crafted plan was destroyed. It was as if life, in its incomprehensible wisdom, decided to teach me the true nature of impermanence.</p>
+          <p>Here's the truth that many of us avoid facing: life is brief. It doesn't wait for us to be ready; it doesn't offer guarantees or instruction manuals. Life simply happens, and it's up to us to find meaning in the chaos. Time, contrary to popular belief, doesn't heal all wounds. It merely passes. We are the ones who must choose what to do with that time.</p>
+          <p>So, when life catches you off guard — and believe me, it will — don't let yourself stay in the dark for too long. It's easy to get lost in sadness, in despair, in the feeling that everything is falling apart. But it's precisely in those moments that we need to ignite our inner light, that flame that, no matter how fragile, never completely goes out. Hardships, as terrifying as they may seem, are temporary. And believe it or not, they come to teach us something. Every obstacle is an opportunity disguised as a challenge, a chance to become stronger, wiser, and more resilient.</p>
+          <p>Faith, whether it's in something greater or simply in yourself, is what keeps us standing when everything seems lost. I've learned that, in the end, what truly matters is not how many times we fall, but how we choose to rise. And it's not enough just to survive — we must live fully, with the awareness that each day is a gift. We must have the courage to move forward, even when the path ahead is uncertain.</p>
+          <p>Don't wait for the perfect moment to be happy, to find yourself, or to believe in something greater. That moment is now, in the midst of the chaos, the uncertainties, the tears that won't stop falling. Find your light, hold on to your faith, and remember: growth often comes from pain, but it leads us to places we never imagined we could reach. When we look back, we realize that it's these moments — those in which we were challenged to reinvent ourselves — that shape who we are. And it's why, in the end, we can look at the chaos we faced with gratitude, knowing that it was there we found the strength that now guides us. Life, with all its brevity and uncertainty, is a journey of self-discovery, and it's up to us to embrace it in all its fullness.</p>
+        </article>
+
+        <article class="post">
+          <div class="post-date">13 August 2024</div>
+          <h2 class="post-title">A Tale of Forbidden Attraction</h2>
+          <p>She's not the kind who would catch my eye at first glance. The last thing I'd expect is to be drawn to her. Yet she made a strong impression. Here I am, someone who relishes expensive perfumes and fine wine, while she's got a whole crate of beer stacked up inside her. But she knows how to speak. And she speaks so well.</p>
+          <p>I, who enjoy dining in high-end restaurants where conversation is secondary, find myself with her, someone who doesn't fit the bill. Yet she tries. Every single day, and she knows her efforts aren't in vain. Especially with me, who's never been one for trying and ended up losing my head. And you know what? I don't want to look back and see where it went off course. Dangerous! But she likes to flirt with danger.</p>
+          <p>She must be the type who sends flowers. The same person who's got no hint of a princess about her. Or was it me who was daydreaming of winged horses, castles, princesses… me… STOP! I stopped. But she made me feel so close. So close to the forbidden, the labelled, the things that might never happen. She makes plans, weaves stories, and I'm fully woven into her narrative. Poor me, who has entwined her in my tale as well.</p>
+          <p>I create, she adores. I lose it, she ignores me. I fall asleep, she leaves. She rushes into other arms, loses herself in other mouths, and I risk saying it's to make me forget. It's confusing. But she doesn't want to forget me. I drift off to sleep thinking that tomorrow morning is already the time to have her. I don't know why, but she feels it.</p>
+        </article>
+
+        <!-- Load More -->
+        <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+          <button class="btn" id="load-more-btn">Load more posts</button>
+          <div class="posts-count" id="posts-count"></div>
+        </div>
+
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <div class="sidebar-block">
+          <h3>Search</h3>
+          <form class="search-form" onsubmit="return false;">
+            <input type="text" id="search-input" placeholder="Search posts…" />
+            <button type="submit" onclick="searchPosts()">Go</button>
+          </form>
+        </div>
+
+        <div class="sidebar-quote">
+          <blockquote>"The work and the wound<br/>are often the same thing."</blockquote>
+          <cite>— Heca Sferra</cite>
+        </div>
+
+        <div class="book-sidebar-block">
+          <div class="book-sidebar-header">
+            <span>Book</span>
+            <span class="new-badge" style="font-style:italic;letter-spacing:0.05em;">Coming soon</span>
+          </div>
+          <div class="book-sidebar-body">
+            <div class="book-sidebar-title">Studio 88</div>
+            <div class="book-sidebar-year">2024</div>
+            <div class="book-sidebar-desc">Add a short, compelling description of Studio 88 here. The genre, the feeling, who it's for. Make them want it.</div>
+            <a href="#books" class="read-more" style="color:var(--muted);">Read more →</a>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- BOOKS -->
+    <section class="books-section" id="books">
+      <div class="section-label">Books</div>
+      <div class="book-full-info" style="margin-top:2rem;">
+          <h2>Studio 88</h2>
+          <div class="book-year">2024</div>
+          <p>Add your book description here. Tell readers what Studio 88 is about — the themes, the feeling, the world it lives in. This is your space to make them want to pick it up.</p>
+          <p>A second paragraph if you need it — a quote, a note on how it came to be, or what you hope it gives its readers.</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+            <a href="#" class="btn" style="background:var(--accent2);border-color:var(--accent2);color:#fff;">Join the waitlist</a>
+          </div>
+        </div>
+      </section>
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+      <div class="section-label">About</div>
+      <div class="about-intro">
+        <div class="about-photo-large">
+          <span style="font-size:1.5rem;opacity:0.25;">📷</span>
+          <span>Your photo</span>
+        </div>
+        <h2>Heca Sferra</h2>
+      </div>
+      <div class="about-text">
+        <p>I write about the pain, the healing, and everything in between — because that "everything in between" is where most of us actually live.</p>
+        <p>I've been writing for over ten years. In that time I've learned that the hardest things to write are usually the most important ones: the stories we carry quietly, the moments that break us open, the slow and nonlinear path back to ourselves.</p>
+        <p>This website is my home on the internet. A place for my writing, my books, and the occasional dispatch from whatever I'm thinking about. I'm glad you're here.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-wrapper">
+    <footer>
+      <span>© Heca Sferra 2026</span>
+      <span>Writing the pain, the healing and everything in between.</span>
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram →</a>
+    </footer>
+  </div>
+
+  <script>
+    // ── PAGINATION: show 8 posts at a time ──
+    const POSTS_PER_PAGE = 8;
+    const posts = Array.from(document.querySelectorAll('main .post'));
+    const loadMoreWrap = document.getElementById('load-more-wrap');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const postsCount = document.getElementById('posts-count');
+    let visibleCount = 0;
+
+    function showPosts(count) {
+      const end = Math.min(visibleCount + count, posts.length);
+      for (let i = visibleCount; i < end; i++) {
+        posts[i].style.display = '';
+        posts[i].classList.add('animate');
+        posts[i].style.animationDelay = ((i - visibleCount) * 0.07) + 's';
+      }
+      visibleCount = end;
+      updateLoadMore();
+    }
+
+    function updateLoadMore() {
+      const remaining = posts.length - visibleCount;
+      if (remaining > 0) {
+        loadMoreWrap.style.display = 'block';
+        postsCount.textContent = visibleCount + ' of ' + posts.length + ' posts';
+        loadMoreBtn.textContent = 'Load ' + Math.min(remaining, POSTS_PER_PAGE) + ' more posts';
+      } else {
+        loadMoreWrap.style.display = 'none';
+      }
+    }
+
+    // Hide all posts initially
+    posts.forEach(p => p.style.display = 'none');
+    showPosts(POSTS_PER_PAGE);
+
+    loadMoreBtn.addEventListener('click', () => showPosts(POSTS_PER_PAGE));
+
+    // ── SEARCH ──
+    const searchInput = document.getElementById('search-input');
+
+    function searchPosts() {
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) {
+        // Reset: show paginated view
+        posts.forEach(p => p.style.display = 'none');
+        visibleCount = 0;
+        showPosts(POSTS_PER_PAGE);
+        return;
+      }
+      // Show all matching, hide non-matching
+      loadMoreWrap.style.display = 'none';
+      posts.forEach(p => {
+        const text = p.textContent.toLowerCase();
+        p.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('keyup', e => {
+      if (e.key === 'Enter') searchPosts();
+      if (searchInput.value === '') searchPosts();
+    });
+  </script>
+
+</body>
+</html>
