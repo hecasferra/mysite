@@ -323,19 +323,31 @@
     /* ── LOAD MORE ── */
     .load-more-wrap {
       text-align: center;
-      padding: 2rem 0 1rem;
+      padding: 1rem 0 0.25rem;
     }
 
     #load-more-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
       cursor: pointer;
+      padding: 0;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
+
+    #load-more-btn:hover { opacity: 0.7; }
 
     .posts-count {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.63rem;
       letter-spacing: 0.1em;
       color: var(--muted);
-      margin-top: 0.8rem;
+      margin-top: 0.5rem;
     }
 
     /* ── SIDEBAR ── */
@@ -1310,7 +1322,7 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
 
         <!-- Load More -->
         <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
-          <button class="btn" id="load-more-btn">Load more posts</button>
+          <button id="load-more-btn">load more</button>
           <div class="posts-count" id="posts-count"></div>
         </div>
 
@@ -1351,7 +1363,7 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
           <div class="book-year">2024</div>
           <p>Studio 88 tells the story of two colleagues drawn into a slow-burning connection inside a creative workspace where ambition and proximity blur every boundary. What begins as subtle tension, a glance, a lingering conversation, grows into something deeper, riskier, and impossible to ignore. At its core, the novel explores power, secrecy, and the emotional cost of wanting someone you can't fully have. It's about restraint stretched to its limit, and what happens when desire refuses to stay contained.</p>
           <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
-            <a href="/cdn-cgi/l/email-protection#542732312626353c313838313a143339353d387a373b396b2721363e31372069072021303d3b746c6c74b6d4c07403353d20383d2720" class="btn" style="background:var(--accent2);border-color:var(--accent2);color:#fff;">Join the waitlist</a>
+            <a href="mailto:sferrahellen@gmail.com?subject=Studio 88 — Waitlist" class="btn" style="background:var(--accent2);border-color:var(--accent2);color:#fff;">Join the waitlist</a>
           </div>
         </div>
       </section>
@@ -1384,18 +1396,19 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
     </footer>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // ── PAGINATION: show 8 posts at a time ──
-    const POSTS_PER_PAGE = 8;
-    const posts = Array.from(document.querySelectorAll('main .post'));
-    const loadMoreWrap = document.getElementById('load-more-wrap');
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    const postsCount = document.getElementById('posts-count');
-    let visibleCount = 0;
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var POSTS_INITIAL = 5;
+    var POSTS_PER_LOAD = 8;
+    var posts = Array.from(document.querySelectorAll('main .post'));
+    var loadMoreWrap = document.getElementById('load-more-wrap');
+    var loadMoreBtn = document.getElementById('load-more-btn');
+    var postsCount = document.getElementById('posts-count');
+    var visibleCount = 0;
 
     function showPosts(count) {
-      const end = Math.min(visibleCount + count, posts.length);
-      for (let i = visibleCount; i < end; i++) {
+      var end = Math.min(visibleCount + count, posts.length);
+      for (var i = visibleCount; i < end; i++) {
         posts[i].style.display = '';
         posts[i].classList.add('animate');
         posts[i].style.animationDelay = ((i - visibleCount) * 0.07) + 's';
@@ -1405,38 +1418,45 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
     }
 
     function updateLoadMore() {
-      const remaining = posts.length - visibleCount;
+      var remaining = posts.length - visibleCount;
       if (remaining > 0) {
         loadMoreWrap.style.display = 'block';
         postsCount.textContent = visibleCount + ' of ' + posts.length + ' posts';
-        loadMoreBtn.textContent = 'Load ' + Math.min(remaining, POSTS_PER_PAGE) + ' more posts';
       } else {
         loadMoreWrap.style.display = 'none';
       }
     }
 
-    // Hide all posts initially
-    posts.forEach(p => p.style.display = 'none');
-    showPosts(POSTS_PER_PAGE);
+    posts.forEach(function(p) { p.style.display = 'none'; });
+    showPosts(POSTS_INITIAL);
 
-    loadMoreBtn.addEventListener('click', () => showPosts(POSTS_PER_PAGE));
+    loadMoreBtn.addEventListener('click', function() { showPosts(POSTS_PER_LOAD); });
 
-    // ── SEARCH ──
-    const searchInput = document.getElementById('search-input');
+    var searchInput = document.getElementById('search-input');
 
     function searchPosts() {
-      const query = searchInput.value.trim().toLowerCase();
+      var query = searchInput.value.trim().toLowerCase();
       if (!query) {
-        // Reset: show paginated view
-        posts.forEach(p => p.style.display = 'none');
+        posts.forEach(function(p) { p.style.display = 'none'; });
         visibleCount = 0;
-        showPosts(POSTS_PER_PAGE);
+        showPosts(POSTS_INITIAL);
         return;
       }
-      // Show all matching, hide non-matching
       loadMoreWrap.style.display = 'none';
-      posts.forEach(p => {
-        const text = p.textContent.toLowerCase();
+      posts.forEach(function(p) {
+        var text = p.textContent.toLowerCase();
         p.style.display = text.includes(query) ? '' : 'none';
       });
-    
+    }
+
+    searchInput.addEventListener('keyup', function(e) {
+      if (e.key === 'Enter') searchPosts();
+      if (searchInput.value === '') searchPosts();
+    });
+
+    document.querySelector('.search-form button').addEventListener('click', searchPosts);
+  });
+  </script>
+
+</body>
+</html>
