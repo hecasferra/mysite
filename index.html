@@ -655,7 +655,56 @@
 
     footer a:hover { color: var(--ink); }
 
-    /* ── SEARCH HIGHLIGHT ── */
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 16, 16, 0.75);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--paper);
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.85rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      z-index: 10;
+    }
+
+    .modal-close:hover { color: var(--ink); }
+
+    .modal-box iframe {
+      display: block;
+      width: 100%;
+      min-height: 500px;
+      border: none;
+    }
     .post.hidden { display: none; }
     mark { background: rgba(200,71,10,0.15); color: var(--ink); }
 
@@ -1363,7 +1412,7 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
           <div class="book-year">2024</div>
           <p>Studio 88 tells the story of two colleagues drawn into a slow-burning connection inside a creative workspace where ambition and proximity blur every boundary. What begins as subtle tension, a glance, a lingering conversation, grows into something deeper, riskier, and impossible to ignore. At its core, the novel explores power, secrecy, and the emotional cost of wanting someone you can't fully have. It's about restraint stretched to its limit, and what happens when desire refuses to stay contained.</p>
           <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
-            <a href="mailto:sferrahellen@gmail.com?subject=Studio 88 — Waitlist" class="btn" style="background:var(--accent2);border-color:var(--accent2);color:#fff;">Join the waitlist</a>
+            <a href="#" onclick="document.getElementById('waitlist-modal').classList.add('active');return false;" class="btn" style="background:var(--accent2);border-color:var(--accent2);color:#fff;">Join the waitlist</a>
           </div>
         </div>
       </section>
@@ -1387,6 +1436,14 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
 
   </div>
 
+  <!-- WAITLIST MODAL -->
+  <div class="modal-overlay" id="waitlist-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="document.getElementById('waitlist-modal').classList.remove('active')">✕ close</button>
+      <iframe src="https://tally.so/embed/D4NWX5?alignLeft=1&hideTitle=1&transparentBackground=1" loading="lazy" title="Studio 88 Waitlist"></iframe>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <div class="site-wrapper">
     <footer>
@@ -1396,7 +1453,7 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
     </footer>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   document.addEventListener('DOMContentLoaded', function () {
     var POSTS_INITIAL = 5;
     var POSTS_PER_LOAD = 8;
@@ -1455,6 +1512,15 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
     });
 
     document.querySelector('.search-form button').addEventListener('click', searchPosts);
+
+    // ── MODAL ──
+    var modal = document.getElementById('waitlist-modal');
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') modal.classList.remove('active');
+    });
   });
   </script>
 
