@@ -1536,6 +1536,32 @@ Are we, not fragments of moments, a beautiful rupture?"</p>
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') modal.classList.remove('active');
     });
+
+    // ── GA4 EVENT TRACKING ──
+    // Waitlist button
+    document.querySelector('[onclick*="waitlist-modal"]').addEventListener('click', function() {
+      gtag('event', 'waitlist_open', {
+        event_category: 'engagement',
+        event_label: 'Studio 88 Waitlist'
+      });
+    });
+
+    // Load more button
+    loadMoreBtn.addEventListener('click', function() {
+      gtag('event', 'load_more', {
+        event_category: 'engagement',
+        event_label: 'Posts loaded: ' + Math.min(visibleCount + POSTS_PER_LOAD, posts.length)
+      });
+    });
+
+    // Search
+    searchInput.addEventListener('keyup', function(e) {
+      if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+        gtag('event', 'search', {
+          search_term: searchInput.value.trim()
+        });
+      }
+    });
   });
   </script>
 
