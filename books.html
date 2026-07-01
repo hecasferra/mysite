@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Books — Heca Sferra</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QE2NRZPH5S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QE2NRZPH5S');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&family=Josefin+Sans:ital,wght@0,300;0,400;0,700;1,300;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #111010;
+      --paper: #faf7f4;
+      --warm: #f0ebe4;
+      --accent: #c8470a;
+      --accent2: #8b2240;
+      --muted: #7e7570;
+      --border: #e0d9d1;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-mono: 'DM Mono', monospace;
+      --font-sans: 'DM Sans', sans-serif;
+      --font-display: 'Josefin Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.7;
+    }
+
+    .site-wrapper {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 0;
+      position: sticky;
+      top: 0;
+      background: #111010;
+      z-index: 100;
+    }
+
+    nav .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+
+    .site-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-center a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-center a:hover,
+    .nav-center a.active { color: #fff; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 0.92;
+    }
+
+    /* ── BOOK ENTRY ── */
+    .book-entry {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      padding: 4rem 0;
+      align-items: start;
+    }
+
+    .book-cover {
+      aspect-ratio: 2/3;
+      background: var(--warm);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      position: relative;
+    }
+
+    .book-cover-inner {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .book-cover-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .book-cover-author {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .book-meta {
+      padding-top: 0.5rem;
+    }
+
+    .book-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .badge.coming-soon {
+      background: var(--accent2);
+      border-color: var(--accent2);
+      color: #fff;
+    }
+
+    .book-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.0;
+      margin-bottom: 0.3rem;
+    }
+
+    .book-year {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .book-description p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.88;
+      margin-bottom: 0.4rem;
+      text-align: justify;
+    }
+
+    .book-description .pull-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink);
+      border-left: 3px solid var(--accent2);
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      line-height: 1.65;
+      text-align: left;
+    }
+
+    .book-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.35rem;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+
+    .btn:hover { background: var(--ink); color: #fff; }
+
+    .btn-primary {
+      background: var(--accent2);
+      border-color: var(--accent2);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: #7a1c37; border-color: #7a1c37; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 16, 16, 0.75);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      background: var(--paper);
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.85rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      z-index: 10;
+    }
+
+    .modal-close:hover { color: var(--ink); }
+
+    .modal-box iframe {
+      display: block;
+      width: 100%;
+      min-height: 500px;
+      border: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: var(--muted);
+      letter-spacing: 0.07em;
+      gap: 1rem;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--ink); }
+
+    @media (max-width: 768px) {
+      .book-entry { grid-template-columns: 1fr; gap: 2rem; }
+      .book-cover { max-width: 200px; }
+      .nav-center { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="site-name">Heca Sferra</a>
+      <ul class="nav-center">
+        <li><a href="index.html">Blog</a></li>
+        <li><a href="books.html" class="active">Books</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="site-wrapper">
+
+    <div class="page-header">
+      <div class="section-label">Books</div>
+      <h1 class="page-title">Writing</h1>
+    </div>
+
+    <div class="book-entry" id="studio-88">
+
+      <div class="book-cover">
+        <div class="book-cover-inner">
+          <div class="book-cover-title">Studio<br/>88</div>
+          <div class="book-cover-author">Heca Sferra</div>
+        </div>
+      </div>
+
+      <div class="book-meta">
+        <div class="book-badges">
+          <span class="badge">Novel</span>
+          <span class="badge">2024</span>
+          <span class="badge coming-soon">Coming Soon</span>
+        </div>
+
+        <h2 class="book-title">Studio 88</h2>
+        <div class="book-year">Debut novel · 2024</div>
+
+        <div class="book-description">
+          <p>Studio 88 tells the story of two colleagues drawn into a slow-burning connection inside a creative workspace where ambition and proximity blur every boundary. What begins as subtle tension, a glance, a lingering conversation, grows into something deeper, riskier, and impossible to ignore.</p>
+          <p>At its core, the novel explores power, secrecy, and the emotional cost of wanting someone you can't fully have. It's about restraint stretched to its limit, and what happens when desire refuses to stay contained.</p>
+          <p class="pull-quote">Studio 88 is for anyone who believes the most dangerous relationships don't explode. They simmer.</p>
+        </div>
+
+        <div class="book-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('waitlist-modal').classList.add('active')">Join the waitlist</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- WAITLIST MODAL -->
+  <div class="modal-overlay" id="waitlist-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="document.getElementById('waitlist-modal').classList.remove('active')">✕ close</button>
+      <iframe src="https://tally.so/embed/D4NWX5?alignLeft=1&hideTitle=1&transparentBackground=1" loading="lazy" title="Studio 88 Waitlist"></iframe>
+    </div>
+  </div>
+
+  <div class="site-wrapper">
+    <footer>
+      <span>© Heca Sferra 2026</span>
+      <span>Writing the pain, the healing and everything in between.</span>
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram →</a>
+    </footer>
+  </div>
+
+  <script>
+    var modal = document.getElementById('waitlist-modal');
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') modal.classList.remove('active');
+    });
+  </script>
+
+</body>
+</html>
